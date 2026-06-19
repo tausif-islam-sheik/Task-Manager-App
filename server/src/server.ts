@@ -7,8 +7,8 @@ const app: Application = express();
 
 // --- Middleware ---
 
-// Enable CORS for the frontend running on localhost:5000
-app.use(cors({ origin: "http://localhost:5000" }));
+// Enable CORS for the frontend running on localhost:3000
+app.use(cors({ origin: "http://localhost:3000" }));
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +25,7 @@ interface Task {
   title: string;
   description: string;
   status: TaskStatus;
+  createdAt: string;
 }
 
 const VALID_STATUSES: TaskStatus[] = ["To Do", "In Progress", "Done"];
@@ -65,6 +66,7 @@ app.post("/api/tasks", (req: Request, res: Response): void => {
     title,
     description: description || "",
     status,
+    createdAt: new Date().toISOString(),
   };
 
   tasks.push(newTask);
